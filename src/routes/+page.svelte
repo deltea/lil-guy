@@ -1,7 +1,12 @@
 <script lang="ts">
   import { animate } from "animejs";
   import { onMount } from "svelte";
-  import { fade, fly } from "svelte/transition";
+  import { fly } from "svelte/transition";
+  import { Howler, Howl } from "howler";
+
+  const sounds = {
+    a: new Howl({ src: ["/bloop.wav"] })
+  };
 
   let lines = $state([
     "",
@@ -12,7 +17,7 @@
   let lineIndex = $state(0);
   let charIndex = $state(0);
   let currentLine = $derived(lines[lineIndex].substring(0, charIndex));
-  let currentFace = $state("dead");
+  let currentFace = $state("asleep");
   let isWoke = $state(false);
 
   function onClick() {
@@ -39,6 +44,7 @@
       const typeInterval = setInterval(() => {
         // lineIndex = (lineIndex + 1) % lines.length;
         charIndex = Math.min(lines[lineIndex].length, charIndex + 1);
+        sounds.a.play();
       }, 50);
 
       setTimeout(() => {
@@ -62,7 +68,7 @@
     onclick={onClick}
   >
     <img
-      src="/smileys/{currentFace}.svg"
+      src="/mutant/{currentFace}.svg"
       alt="lil guy"
       class="w-12"
       draggable={false}
