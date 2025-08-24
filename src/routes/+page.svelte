@@ -5,10 +5,9 @@
 
   let lines = $state([
     "",
-    "hello world!",
-    "how's it going!",
     "hello there!",
-    "i'm lil guy!"
+    "i'm lil guy!",
+    "how's it going?",
   ]);
   let lineIndex = $state(0);
   let charIndex = $state(0);
@@ -30,21 +29,23 @@
     const backspaceInterval = setInterval(() => {
       charIndex = Math.max(0, charIndex - 1);
     }, 25);
+
+    // after text reset
     setTimeout(() => {
-      clearInterval(backspaceInterval);
       lineIndex++;
+      clearInterval(backspaceInterval);
 
       currentFace = "grinning";
       const typeInterval = setInterval(() => {
         // lineIndex = (lineIndex + 1) % lines.length;
         charIndex = Math.min(lines[lineIndex].length, charIndex + 1);
       }, 50);
+
       setTimeout(() => {
         currentFace = "slight_smile";
         clearInterval(typeInterval);
       }, lines[lineIndex].length * 50);
     }, lines[lineIndex].length * 25);
-
   }
 
   onMount(() => {
@@ -69,7 +70,7 @@
   </button>
 
   {#if isWoke}
-    <p transition:fade={{ duration: 100}} id="typewriter" class="border-2 border-fg rounded-xl h-16 flex items-center justify-center px-6 text-xl font-semibold">
+    <p transition:fly={{ duration: 200, y: 50 }} id="typewriter" class="border-2 border-fg rounded-xl h-16 flex items-center justify-center px-6 text-xl font-semibold">
       {currentLine}
     </p>
   {/if}
