@@ -8,5 +8,9 @@
 }
 
 body {
-  @apply bg-bg text-fg;
+  background-image: url("/x.svg"), linear-gradient(var(--color-bg));
+  background-size: 24px 24px;
+  background-repeat: repeat;
+
+  @apply text-fg;
 }
